@@ -11,9 +11,8 @@ import {
   globalAccountPDA
 } from './program'
 import {
-  POOL_KEYPAIR,
+  POOL_KEY,
   PROGRAM_ID,
-  TAX_KEYPAIR,
 } from './constants'
 import {
   TOKEN_PROGRAM_ID,
@@ -58,7 +57,7 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
   const wallet = useWallet()
 
   useEffect(() => {
-      let poolATA =  new web3.PublicKey(POOL_KEYPAIR.publicKey);
+      let poolATA =  POOL_KEY;
       setPoolATA(poolATA);
   }, [wallet]);
 

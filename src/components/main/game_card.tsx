@@ -174,7 +174,7 @@ export default function GameCard({ lottery, source }: any) {
                     fontWeight: 'bold',
                   }}
                 >
-                  $ {Number(lottery.account.ticketPrice * lottery.account.maxTicket / LAMPORTS_PER_SOL).toFixed(2)}
+                  {Number(lottery.account.ticketPrice * lottery.account.maxTicket / LAMPORTS_PER_SOL).toFixed(2)} SOL
                 </Typography>
               </Stack>
 
