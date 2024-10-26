@@ -40,7 +40,7 @@ export default function GameCard({ lottery, source }: any) {
   const [lotteryData, setLotteryData] = useState<any>();
   const [selectedLottery, setSelectLottery] = useState('');
   const [restTime, setRestTime] = useState<number>(5000);
-  const [countdownTarget, setCountdownTarget] = useState<number>(Date.now() + 5000); // Initialize with current time + 5 seconds
+  const [countdownTarget, setCountdownTarget] = useState<number>(Date.now() + 5000);
   const [winHistory, setWinHistory] = useState<any | null>(null);
   const [timeFrame, setTimeFrame] = useState<number>(1);
 
@@ -143,7 +143,7 @@ export default function GameCard({ lottery, source }: any) {
                 marginTop={'7px'}
               >
                 <AccessAlarmOutlinedIcon sx={{ mr: '6px' }} />
-                <Countdown date={countdownTarget} /> {/* Use countdownTarget instead of Date.now() + restTime */}
+                <Countdown date={countdownTarget} />
               </Box>
               <Box display={'flex'} justifyContent={'center'} marginTop={'7px'}>
                 <ConfirmationNumberOutlinedIcon />

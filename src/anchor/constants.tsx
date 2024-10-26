@@ -1,5 +1,4 @@
 import { PublicKey } from "@solana/web3.js";
-import bs58 from 'bs58';
 
 export const RPC_ENDPOINT = import.meta.env.VITE_RPC_ENDPOINT;
 export const PROGRAM_ID = new PublicKey(import.meta.env.VITE_PROGRAM_ID);

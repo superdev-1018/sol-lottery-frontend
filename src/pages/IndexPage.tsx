@@ -14,6 +14,7 @@ import {
   ListItem,
   ListItemText,
   Modal,
+  Stack,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
@@ -146,6 +147,11 @@ export default function IndexPage() {
     <>
       {loading == false ? (
         <Container maxWidth={false} sx={{ padding: '20px' }}>
+          <Box>
+            <Stack display={'flex'}>
+              
+            </Stack>
+          </Box>
           <Paper
             elevation={3}
             sx={{
