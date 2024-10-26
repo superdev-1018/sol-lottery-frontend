@@ -21,6 +21,7 @@ import {TicketModal} from './ticket_modal'
 import {TimeFrame} from '@/anchor/constants';
 import { formatTime, getServerTime } from '@/utils/util'
 import { SocketContext } from '@/context/SocketContext';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 
 const card_style = {
@@ -157,7 +158,7 @@ export default function GameCard({ lottery, source }: any) {
                     fontFamily: 'Roboto,sans-serif',
                   }}
                 >
-                  : {lottery.account.ticketPrice} USDT
+                  : {Number(lottery.account.ticketPrice/LAMPORTS_PER_SOL)} SOL
                 </Typography>
               </Box>
 
@@ -175,7 +176,7 @@ export default function GameCard({ lottery, source }: any) {
                     fontWeight: 'bold',
                   }}
                 >
-                  $ {lottery.account.ticketPrice * lottery.account.maxTicket}
+                  $ {Number(lottery.account.ticketPrice * lottery.account.maxTicket/LAMPORTS_PER_SOL).toFixed(2)}
                 </Typography>
               </Stack>
 

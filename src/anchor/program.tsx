@@ -3,7 +3,7 @@ import {
   AnchorProvider
 } from '@coral-xyz/anchor';
 import { Connection, PublicKey } from '@solana/web3.js';
-import { ADMIN_KEY, ADMIN_KEYPAIR, PROGRAM_ID, tokenOwner } from './constants';
+import { ADMIN_KEY, PROGRAM_ID } from './constants';
 import { IDL, Lottery } from './idl';
 
 export const getProgram = (connection: Connection, wallet: any): Program<Lottery> => {

@@ -1,8 +1,7 @@
-import { IdlAccounts, Program, AnchorProvider, web3 } from '@coral-xyz/anchor'
+import { Program, web3 } from '@coral-xyz/anchor'
 import { Lottery } from './idl'
-import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction, sendAndConfirmRawTransaction, sendAndConfirmTransaction } from '@solana/web3.js'
+import {PublicKey, SystemProgram } from '@solana/web3.js'
 import {
-  useAnchorWallet,
   useConnection,
   useWallet,
 } from '@solana/wallet-adapter-react'
@@ -11,36 +10,14 @@ import {
   getProgram,
   globalAccountPDA
 } from './program'
-import { BN } from 'bn.js'
 import {
-  ADMIN_KEY,
-  ADMIN_KEYPAIR,
-  DevFee,
-  MaxTickets,
   POOL_KEYPAIR,
   PROGRAM_ID,
   TAX_KEYPAIR,
-  TicketPrice,
-  TimeFrame,
-  USDT_MINT_ADDRESS,
-  tokenOwner,
 } from './constants'
 import {
-  ASSOCIATED_TOKEN_PROGRAM_ID,
-  TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
-  createAccount,
-  createAssociatedTokenAccount,
-  createAssociatedTokenAccountInstruction,
-  createMint,
-  getAccount,
-  getAssociatedTokenAddress,
-  getAssociatedTokenAddressSync,
-  getOrCreateAssociatedTokenAccount,
-  mintTo,
-  transfer,
 } from '@solana/spl-token'
-import { token } from '@coral-xyz/anchor/dist/cjs/utils'
 import {toast} from 'react-toastify';
 
 // Define a proper context type
@@ -74,31 +51,16 @@ interface GlobalStateProps {
 
 export const GlobalStateContext = ({ children }: GlobalStateProps) => {
   const [program, setProgram] = useState<Program<Lottery> | null>(null)
-  const [isInitialized, setIsInitialized] = useState<boolean | null>(null)
-  const [globalAccount, setGlobalAccount] = useState<any | null>(null)
-  const [isAdmin, setAdmin] = useState(false)
   const [poolATA, setPoolATA] = useState<any | null>(null);
-  const [withdrawATA, setWithdrawATA] = useState<any | null>(null);
   
 
   const { connection } = useConnection()
   const wallet = useWallet()
 
-  /***********For Development ************/
-
   useEffect(() => {
-    const tokenMint = async () => {
-      let poolATA =  await getOrCreateAssociatedTokenAccount(connection, POOL_KEYPAIR, USDT_MINT_ADDRESS, POOL_KEYPAIR.publicKey);
-      let withdrawATA = await getOrCreateAssociatedTokenAccount(connection, TAX_KEYPAIR, USDT_MINT_ADDRESS, TAX_KEYPAIR.publicKey);
+      let poolATA =  new web3.PublicKey(POOL_KEYPAIR.publicKey);
       setPoolATA(poolATA);
-      setWithdrawATA(withdrawATA);
-    }
-    tokenMint();
   }, [wallet]);
-
-
-  //*************************************/
-
 
   useEffect(() => {
     if (!wallet) return
@@ -150,36 +112,8 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
     console.log('Buy Ticket Function')
     if (!wallet.publicKey) return
 
-    const associatedTokenAddress = await getAssociatedTokenAddress(USDT_MINT_ADDRESS, wallet.publicKey,false)
 
-    let userAssociatedTokenAddress;
-    const accountInfo = await connection.getAccountInfo(associatedTokenAddress)
-
-    if (accountInfo) {
-      console.log("auccount exist");
-      userAssociatedTokenAddress = associatedTokenAddress
-    } else {
-      const transaction = new Transaction().add(
-        createAssociatedTokenAccountInstruction(
-          wallet.publicKey,
-          associatedTokenAddress,
-          wallet.publicKey,
-          USDT_MINT_ADDRESS,
-          TOKEN_PROGRAM_ID,
-          ASSOCIATED_TOKEN_PROGRAM_ID
-        )
-      )
-
-      transaction.feePayer = wallet.publicKey
-      const { blockhash } = await connection.getLatestBlockhash()
-      transaction.recentBlockhash = blockhash
-      const signedTransaction = await wallet.sendTransaction(transaction, connection);
-      await connection.confirmTransaction(signedTransaction);
-
-      userAssociatedTokenAddress = associatedTokenAddress
-    }
-
-    if ( !wallet.publicKey || !userAssociatedTokenAddress || !poolATA.address) return;
+    if ( !wallet.publicKey || !poolATA) return;
 
     const [userAccountPDA] = PublicKey.findProgramAddressSync([Buffer.from('USER_INFO_SEED'), wallet.publicKey.toBuffer()], PROGRAM_ID);
     const lotteryPDA = new web3.PublicKey(lotteryPubkeyStr)
@@ -200,8 +134,8 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
       .accounts({
         buyer: wallet.publicKey,
         globalAccount: globalAccountPDA,
-        poolTokenAccount: poolATA.address,
-        buyerTokenAccount: userAssociatedTokenAddress,
+        poolTokenAccount: poolATA,
+        buyerTokenAccount: new web3.PublicKey(wallet.publicKey),
         user: userAccountPDA,
         lottery: lotteryPDA,
         depositeTicker: depositeTickerPDA,
@@ -217,8 +151,8 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
       .accounts({
         buyer: wallet.publicKey,
         globalAccount: globalAccountPDA,
-        poolTokenAccount: poolATA.address,
-        buyerTokenAccount: userAssociatedTokenAddress,
+        poolTokenAccount: poolATA,
+        buyerTokenAccount: new web3.PublicKey(wallet.publicKey),
         user: userAccountPDA,
         referrer: referrerPDA,
         lottery: lotteryPDA,

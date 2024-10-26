@@ -174,11 +174,11 @@ export default function IndexPage() {
               >
                 {winnerTicker?.winner.toString()}
               </Link>{' '}
-              won the {formatTime(Number(winnerTicker?.timeFrame))} pool at{' '}
-              <Link href="#">
-                {(winnerTicker?.prize/LAMPORTS_PER_SOL).toFixed(2)}{' '}
-                USDT
+              won the <Link href="#">
+                {(winnerTicker?.prize/LAMPORTS_PER_SOL).toFixed(3)}{' '}
+                SOL{'  '}
               </Link>
+              at{' '} {formatTime(Number(winnerTicker?.timeFrame))} pool 
             </Typography>
           </Paper>
           <Grid
@@ -229,7 +229,7 @@ export default function IndexPage() {
               </Link>{' '}
               just deposited{' '}
               <Link href="#">
-                {Number(depositeTicker?.amount)} USDT ({depositeTicker?.spots}{' '}
+                {Number(depositeTicker?.amount/LAMPORTS_PER_SOL)} SOL ({depositeTicker?.spots}{' '}
                 spots)
               </Link>{' '}
               at {formatTime(Number(depositeTicker?.timeFrame))} pool
