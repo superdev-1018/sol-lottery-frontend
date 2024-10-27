@@ -323,7 +323,7 @@ export default function IndexPage() {
               Pool Party is a user-friendly crypto lottery platform that allows
               people to participate in various prize pools, which are based on
               different timeframes like hourly, daily, or monthly. Players can
-              join by purchasing tickets using USDT, and winners are chosen
+              join by purchasing tickets using SOL, and winners are chosen
               fairly through random selection. Prizes are automatically sent to
               the winners' wallets after a small fee is deducted. The platform
               also has a referral system where users can earn rewards by
@@ -370,7 +370,7 @@ export default function IndexPage() {
                   <ListItemText>
                     1. Connect Your Wallet: Connect your crypto wallet to the
                     platform. Pool Party currently operates on the Solana
-                    network, and you’ll need USDT (Tether) to participate in the
+                    network, and you’ll SOL Token to participate in the
                     lotteries
                   </ListItemText>
                 </ListItem>
@@ -385,8 +385,8 @@ export default function IndexPage() {
                 <ListItem>
                   <ListItemText>
                     3. Buy Tickets: Purchase tickets for your chosen pool. Each
-                    ticket will cost a certain amount in USDT, depending on the
-                    pool’s duration. For example, hourly pools cost 1 USDT per
+                    ticket will cost a certain amount in SOL, depending on the
+                    pool’s duration. For example, hourly pools cost 0.01 SOL per
                     ticket, while longer-duration pools may cost more.
                   </ListItemText>
                 </ListItem>

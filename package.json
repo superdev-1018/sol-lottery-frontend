@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "vite --port 4200",
-    "buidl": "tsc && vite build",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "start": "vite preview --port 5000",
     "packages:update": "ncu -u && yarn",
     "prepare": "husky install",
     "pre-commit": "run-p 'pre-commit:*'",
