@@ -8,7 +8,8 @@ import { useWallet } from "@solana/wallet-adapter-react"
 type ReferralModalProps = {
     openModal: boolean,
     handleClose: () => void,
-    referralLink: string | null
+    referralLink: string | null,
+    setReferralLink: (referralLink: string) => void
 }
 
 const modalStyle = {
@@ -41,7 +42,7 @@ const modalStyle = {
   }
 
 
-export function ReferralModal({openModal, handleClose, referralLink}:ReferralModalProps){
+export function ReferralModal({openModal, handleClose, referralLink, setReferralLink}:ReferralModalProps){
     const [referral, setReferral] = useState<any | "">("");
     const theme = useTheme()
     const xsDisplay = useMediaQuery(theme.breakpoints.down('sm'))
@@ -53,7 +54,7 @@ export function ReferralModal({openModal, handleClose, referralLink}:ReferralMod
     }
 
     const setFunc = () => {
-      setUserReferral(referral);
+      setUserReferral(referral, setReferralLink);
       handleClose();
     }
 

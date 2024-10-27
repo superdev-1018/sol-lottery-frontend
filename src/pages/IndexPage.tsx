@@ -137,9 +137,9 @@ export default function IndexPage() {
   useEffect(()=>{
     if(message != ""){
       if(state == "success"){
-        toast.success(message, {position:'top-center', autoClose:5000});
+        toast.success(message, {position:'bottom-right', autoClose:5000});
       } else if (state == "warning"){
-        toast.warning(message, {position:'top-center', autoClose:5000});
+        toast.info(message, {position:'bottom-right', autoClose:5000});
       }
     }
   },[message]);
@@ -151,6 +151,7 @@ export default function IndexPage() {
       let spots = userData?.spot;
       setSpot(spots);
     }
+
     getSpots();
 
   }, [wallet]);
@@ -173,15 +174,15 @@ export default function IndexPage() {
     <>
       {loading == false ? (
         <Container maxWidth={false} sx={{ padding: '20px' }}>
-          <Grid container spacing={1}>
+          {wallet && wallet.connect?<Grid container spacing={1} sx={{mb:1}}>
             {spots? spotsStr.map((label, index) => (
-              <Grid item xs={2.4} sm={2.4} md={2.4} lg={1.2} key={index} >
-                  <Typography variant="h6" textAlign="center" color={"white"}>
+              <Grid item xs={6} sm={2.4} md={2.4} lg={1.2} key={index} >
+                  <Typography variant="h6" textAlign="left" color={"white"}>
                   {`${label}${spots[index]}`}
                   </Typography>
               </Grid>
             )):null}
-          </Grid>
+          </Grid>:null}
 
 
           <Paper

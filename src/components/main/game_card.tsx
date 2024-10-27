@@ -81,6 +81,7 @@ export default function GameCard({ lottery, source, setSpot }: any) {
     let timeFrame = Number(lottery.account.timeFrame);
     const setRestfulTime = async () => {
       let restTime = await getServerTime(timeFrame);
+
       setRestTime(restTime);
       setCountdownTarget(Date.now() + restTime);
     };

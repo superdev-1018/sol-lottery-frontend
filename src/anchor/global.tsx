@@ -29,7 +29,7 @@ interface GlobalContextType {
   getWinnerTicker: () => Promise<any | null>;
   getDepositeTicker: () => Promise<any | null>;
   getHistory: (timeFrame: number) => Promise<any | null>;
-  setUserReferral: (link:string) => Promise<any | null>;
+  setUserReferral: (link:string, setReferralLink: (referralLink: string) => void) => Promise<any | null>;
 }
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -41,7 +41,7 @@ export const GlobalContext = createContext<GlobalContextType>({
   getWinnerTicker: async () => null,
   getDepositeTicker: async () => null,
   getHistory: async (timeFrame: number) => null,
-  setUserReferral: async (link:string) => null,
+  setUserReferral: async (link:string, setReferralLink: (referralLink: string) => void) => null,
 });
 
 interface GlobalStateProps {
@@ -124,6 +124,7 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
     if (referralID && referralID != ""){
       const userList = await program?.account.user.all();
       const referrerData = userList?.find(user => user.account.referralLink === referralID);
+      console.log(referrerData,"referrer data")
       referrerPDA = referrerData?.publicKey;
     }
 
@@ -168,9 +169,11 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
 
       let [userPDA, bump] = PublicKey.findProgramAddressSync([Buffer.from("USER_INFO_SEED"), wallet.publicKey.toBuffer()], PROGRAM_ID);
       let userdata = await program?.account.user.fetch(userPDA);
-      if (txHash){ toast.success("Ticket Buy Success!",{position:'top-center', autoClose:7000})}
-      console.log(txHash,"buyticket txHash");
-      setSpot(userdata.spot);
+      if (txHash){ 
+        toast.success("Ticket Buy Success!",{position:'top-center', autoClose:7000})
+        console.log(txHash,"buyticket txHash");
+        setSpot(userdata.spot);
+      }
   }
 
 
@@ -282,7 +285,7 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
   };
   
 
-  const setUserReferral = async (link: string) => {
+  const setUserReferral = async (link: string, setReferralLink: (referralLink: string) => void) => {
     let userData = await getUserData();
     if (!userData){
       toast.warning("You should buy ticket for setting referral link",{position:'top-center', autoClose:7000});
@@ -300,7 +303,8 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
       });
 
       if (txHash){ 
-        toast.success("Success Setting!", {position:'top-center', autoClose:7000})
+        toast.success("Success Setting!", {position:'top-center', autoClose:7000});
+        setReferralLink(link);
       }
     }
   }

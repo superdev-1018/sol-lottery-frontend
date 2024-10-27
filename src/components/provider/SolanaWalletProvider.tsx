@@ -11,6 +11,7 @@ import {
   SlopeWalletAdapter,
   SolflareWalletAdapter,
   TorusWalletAdapter,
+  ExodusWalletAdapter,
 } from '@solana/wallet-adapter-wallets'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import '@/assets/style/WalletAdapter.css'
@@ -18,7 +19,7 @@ import { useSnackbar } from 'notistack'
 import { useRecoilValue } from 'recoil'
 import { walletState } from '@/store/wallet'
 import { RPC_ENDPOINT } from '@/anchor/constants';
-import { GlobalContext, GlobalStateContext } from '@/anchor/global'
+import { GlobalStateContext } from '@/anchor/global'
 
 type Props = {
   children: ReactNode
@@ -35,6 +36,7 @@ export default function SolanaWalletProvider({ children }: Props) {
       new SolflareWalletAdapter({ network }),
       new LedgerWalletAdapter(),
       new TorusWalletAdapter(),
+      new ExodusWalletAdapter()
     ],
     [network]
   )

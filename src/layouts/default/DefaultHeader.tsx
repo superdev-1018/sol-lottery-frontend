@@ -128,7 +128,7 @@ export default function DefaultHeader() {
         </Grid>
       </Container>
 
-      <ReferralModal openModal={openModal} handleClose={handleClose} referralLink = {referral}/>
+      <ReferralModal openModal={openModal} handleClose={handleClose} referralLink = {referral} setReferralLink = {setReferralLink}/>
     </>
   )
 }
