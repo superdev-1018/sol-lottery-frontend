@@ -9,7 +9,7 @@ import { jaJP, enUS } from '@mui/material/locale'
 import { createTheme } from '@mui/material/styles'
 import { grey } from '@mui/material/colors'
 
-export const makeTheme = (isEnglish: boolean, mode: 'light' | 'dark') =>
+export const makeTheme = (mode: 'light' | 'dark') =>
   createTheme(
     {
       breakpoints: {
@@ -241,6 +241,5 @@ export const makeTheme = (isEnglish: boolean, mode: 'light' | 'dark') =>
         'rgb(169 174 183 / 50%) 0px 12px 24px 0px',
         'rgb(169 174 183 / 50%) 0px 12.5px 25px 0px',
       ],
-    },
-    isEnglish ? enUS : jaJP
+    }
   )

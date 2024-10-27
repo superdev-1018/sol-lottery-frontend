@@ -22,8 +22,8 @@ import {toast} from 'react-toastify';
 // Define a proper context type
 interface GlobalContextType {
   getOpenedLottery: () => Promise<any | null>;
-  buyTicket: (lotteryPubkeyStr: string, count: number, referralID: string) => Promise<void>;
-  joinToLottery: (lotteryPDAStr: string, userSpotIndex: number) => Promise<void>;
+  buyTicket: (lotteryPubkeyStr: string, count: number, referralID: string, setSpot:(numbers: number[]) => void) => Promise<void>;
+  joinToLottery: (lotteryPDAStr: string, userSpotIndex: number,  setSpot:(numbers: number[]) => void) => Promise<void>;
   getUserData: () => Promise<any | null>; 
   getLotteryData: (lotteryPDAStr: string) => Promise<any | null>;
   getWinnerTicker: () => Promise<any | null>;
@@ -34,8 +34,8 @@ interface GlobalContextType {
 
 export const GlobalContext = createContext<GlobalContextType>({
   getOpenedLottery: async () => null,
-  buyTicket: async (lotteryPubkeyStr: string, count: number, referralID: string) => {},
-  joinToLottery: async (lotteryPDAStr: string, userSpotIndex: number) => {},
+  buyTicket: async (lotteryPubkeyStr: string, count: number, referralID: string, setSpot: (numbers: number[]) => void) => {},
+  joinToLottery: async (lotteryPDAStr: string, userSpotIndex: number,  setSpot:(numbers: number[]) => void) => {},
   getUserData: async () => null,
   getLotteryData: async (lotteryPDAStr: string) => null,
   getWinnerTicker: async () => null,
@@ -107,7 +107,7 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
   };
   
 
-  const buyTicket = async (lotteryPubkeyStr: string, count: number, referralID: string) => {
+  const buyTicket = async (lotteryPubkeyStr: string, count: number, referralID: string, setSpot: (numbers: number[]) => void) => {
     console.log('Buy Ticket Function')
     if (!wallet.publicKey) return
 
@@ -170,10 +170,11 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
       let userdata = await program?.account.user.fetch(userPDA);
       if (txHash){ toast.success("Ticket Buy Success!",{position:'top-center', autoClose:7000})}
       console.log(txHash,"buyticket txHash");
+      setSpot(userdata.spot);
   }
 
 
-  const joinToLottery = async(lotteryPDAStr: string, userSpotIndex: number) => {
+  const joinToLottery = async(lotteryPDAStr: string, userSpotIndex: number, setSpot:(numbers:number[])=>void) => {
     if (!wallet.publicKey) return
     let [userPDA, bump] = PublicKey.findProgramAddressSync([Buffer.from("USER_INFO_SEED"), wallet.publicKey.toBuffer()], PROGRAM_ID);
 
@@ -202,6 +203,8 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
       });
       if (typeof txHash == 'string'){ console.log(txHash,"txhash in join lottery")
         toast.success("Successfully Joined!", {position:'top-center', autoClose:7000});
+        let userdata = await program?.account.user.fetch(userPDA);
+        setSpot(userdata.spot);
       }
   }
 
@@ -300,7 +303,6 @@ export const GlobalStateContext = ({ children }: GlobalStateProps) => {
         toast.success("Success Setting!", {position:'top-center', autoClose:7000})
       }
     }
-    
   }
 
 

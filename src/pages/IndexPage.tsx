@@ -69,6 +69,7 @@ export default function IndexPage() {
   const [winnerTicker, setWinnerTicker] = useState<any | null>(null)
   const [depositeTicker, setDepositeTicker] = useState<any | null>(null)
   const [openModal, setOpenModal] = useState(false)
+  const [spots, setSpot] = useState([]);
 
   const {newGame, message, state} = useContext(SocketContext);
 
@@ -76,7 +77,7 @@ export default function IndexPage() {
 
   const theme = useTheme()
   const { connection } = useConnection()
-  const { getDepositeTicker, getWinnerTicker, getOpenedLottery } = useGlobalState()
+  const { getDepositeTicker, getWinnerTicker, getOpenedLottery, getUserData } = useGlobalState()
 
   useEffect(() => {
     const setLottery = async () => {
@@ -141,17 +142,48 @@ export default function IndexPage() {
         toast.warning(message, {position:'top-center', autoClose:5000});
       }
     }
-  },[message])
+  },[message]);
+  
+
+  useEffect(() => {
+    const getSpots = async () => {
+      let userData = await getUserData();
+      let spots = userData?.spot;
+      setSpot(spots);
+    }
+    getSpots();
+
+  }, [wallet]);
+
+
+  const spotsStr = [
+    "Hourly Spot: ",
+    "3-Hourly Spot: ",
+    "6-Hourly Spot: ",
+    "12-Hourly Spot: ",
+    "Daily Spot: ",
+    "Weekly Spot: ",
+    "Monthly Spot: ",
+    "Qqarterly Spot: ",
+    "Half-Yearly Spot: ",
+    "Annually Spot: ",
+  ];
 
   return (
     <>
       {loading == false ? (
         <Container maxWidth={false} sx={{ padding: '20px' }}>
-          <Box>
-            <Stack display={'flex'}>
-              
-            </Stack>
-          </Box>
+          <Grid container spacing={1}>
+            {spots? spotsStr.map((label, index) => (
+              <Grid item xs={2.4} sm={2.4} md={2.4} lg={1.2} key={index} >
+                  <Typography variant="h6" textAlign="center" color={"white"}>
+                  {`${label}${spots[index]}`}
+                  </Typography>
+              </Grid>
+            )):null}
+          </Grid>
+
+
           <Paper
             elevation={3}
             sx={{
@@ -199,6 +231,7 @@ export default function IndexPage() {
                     <GameCard
                       lottery={lottery}
                       source={imgList.source.games[index]}
+                      setSpot = {setSpot}
                     />
                   </Grid>
                 ))

@@ -31,7 +31,7 @@ const card_style = {
   cursor: 'pointer',
 };
 
-export default function GameCard({ lottery, source }: any) {
+export default function GameCard({ lottery, source, setSpot }: any) {
   const [openModal, setOpenModal] = useState(false);
   const [openTicketModal, setOpenTicketModal] = useState(false);
   const handleClose = () => setOpenModal(false);
@@ -61,7 +61,7 @@ export default function GameCard({ lottery, source }: any) {
     if (userLotterySpot > 0) {
       console.log("have ticket");
       let lotteryId = lotteryData.id;
-      joinToLottery(lottery.publicKey.toString(), userSpotIndex);
+      joinToLottery(lottery.publicKey.toString(), userSpotIndex, setSpot);
     } else {
       setOpenTicketModal(true);
       setSelectLottery(lottery.publicKey.toString());
@@ -212,7 +212,7 @@ export default function GameCard({ lottery, source }: any) {
       ) : null}
 
       <InfoModal openModal={openModal} handleClose={handleClose} history={winHistory} timeframe={timeFrame} />
-      <TicketModal openModal={openTicketModal} handleClose={handleTicketClose} lotteryPubkey={selectedLottery} />
+      <TicketModal openModal={openTicketModal} handleClose={handleTicketClose} lotteryPubkey={selectedLottery} setSpot = {setSpot}/>
     </>
   );
 }

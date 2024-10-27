@@ -19,7 +19,8 @@ import { useLocation } from 'react-router-dom'
 type TicketModalProps = {
   openModal: boolean
   handleClose: () => void
-  lotteryPubkey: string
+  lotteryPubkey: string,
+  setSpot:() => void
 }
 
 const modalStyle = {
@@ -52,11 +53,12 @@ const modalStyle = {
   color: 'white',
 }
 
-export function TicketModal({ openModal, handleClose , lotteryPubkey}: TicketModalProps) {
+export function TicketModal({ openModal, handleClose , lotteryPubkey, setSpot}: TicketModalProps) {
   const theme = useTheme()
   const xsDisplay = useMediaQuery(theme.breakpoints.down('sm'))
   const [ticketNumber, setTicketNumber] = useState<number>(1);
   const location = useLocation();
+  const { buyTicket } = useGlobalState()
 
   const getQueryParam = (param: string) => {
     const params = new URLSearchParams(location.search);
@@ -73,14 +75,14 @@ const buy = () =>{
   handleClose()
   let referralID = getQueryParam('ref');
   if (!referralID) {referralID = "";}
-  buyTicket(lotteryPubkey, ticketNumber, referralID)
+  buyTicket(lotteryPubkey, ticketNumber, referralID, setSpot)
 }
 
 const handleAdd = () => {
     setTicketNumber((prev:number) => prev + 1);
 };
 
-  const { buyTicket } = useGlobalState()
+  
 
   return (
     <Modal

@@ -1,6 +1,5 @@
 import '@/lib/i18n'
 import { Suspense, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -20,10 +19,8 @@ import { SocketProvider } from '@/context/SocketContext'
 
 
 function InnerApp() {
-  const { i18n } = useTranslation()
-  const isEnglish = useMemo(() => i18n.language === 'en-US', [i18n])
   const colorMode = useRecoilValue(colorModeState)
-  const theme = makeTheme(isEnglish, colorMode);
+  const theme = makeTheme(colorMode);
 
 
   return (
