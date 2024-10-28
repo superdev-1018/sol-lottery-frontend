@@ -1,6 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import { socket } from "@/utils/util";
 
+
+socket.on("connect", () => {
+  console.log("connected")
+});
+socket.on("connect_error", (error)=>{
+  console.log(error, " connect error")
+});
 export const SocketContext = createContext({
     newGame: false,
     message: "",
