@@ -3,7 +3,9 @@ import { ServerUrl } from '@/anchor/constants';
 import { io } from "socket.io-client";
 import { SocketUrl } from '@/anchor/constants';
 
-export const socket = io(SocketUrl);
+export const socket = io(SocketUrl, {
+  transports: ['websocket', 'polling'],
+});
 
 export const formatTime = (hours: number): string => {
     if (hours ==1 ) {
