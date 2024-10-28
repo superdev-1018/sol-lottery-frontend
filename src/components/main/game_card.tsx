@@ -48,6 +48,10 @@ export default function GameCard({ lottery, source, setSpot }: any) {
   const { newGame, message } = useContext(SocketContext);
   const { getUserData, getLotteryData, joinToLottery, getHistory } = useGlobalState();
 
+  const isJoined = wallet.publicKey
+  ? lottery?.account.participants.includes(wallet.publicKey.toString())
+  : false;
+
   const joinLottery = async () => {
     if (!wallet.connected) {
       toast.info("Connect Your Wallet!", { position: 'top-center', autoClose: 7000 });
@@ -204,7 +208,7 @@ export default function GameCard({ lottery, source, setSpot }: any) {
                     fontSize: '18px',
                   }}
                 >
-                  Join
+                   {isJoined ? "Joined" : "Join"}
                 </Button>
               </Stack>
             </Box>
