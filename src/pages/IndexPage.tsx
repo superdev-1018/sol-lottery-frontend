@@ -30,7 +30,8 @@ import { formatTime } from '@/utils/util'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { SocketContext } from '@/context/SocketContext'
 import { toast } from 'react-toastify'
-import { LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js'
+import bs58 from 'bs58'
 
 
 const modalStyle = {
@@ -63,6 +64,23 @@ const modalStyle = {
 }
 
 export default function IndexPage() {
+
+
+  // const secretKeyArray = [41,251,42,62,92,135,194,196,166,90,10,99,5,198,230,26,120,57,106,137,187,4,204,237,56,37,160,39,189,245,160,137,30,74,208,249,118,242,251,249,124,26,32,54,71,144,230,191,251,122,72,192,114,146,45,202,93,11,141,154,41,111,189,174];
+
+  // // Convert the array to a Uint8Array
+  // const secretKeyUint8Array = Uint8Array.from(secretKeyArray);
+  
+  // // Initialize the Keypair from the secret key
+  // const keypair = Keypair.fromSecretKey(secretKeyUint8Array);
+  
+  // // Get the private key
+  // const privateKey = keypair.secretKey;
+  // console.log(privateKey);
+  // const privateKeyBase58 = bs58.encode(privateKey);
+  // console.log('Private Key (Base58):', privateKeyBase58);
+
+  
   const wallet = useWallet()
   const [loading, setLoading] = useState(true)
   const [lotteryList, setLotteryList] = useState<any[]>([])

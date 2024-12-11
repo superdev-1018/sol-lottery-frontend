@@ -2,7 +2,7 @@ import {
   Program,
   AnchorProvider
 } from '@coral-xyz/anchor';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection, Keypair, PublicKey } from '@solana/web3.js';
 import { ADMIN_KEY, PROGRAM_ID } from './constants';
 import { IDL, Lottery } from './idl';
 

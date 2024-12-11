@@ -21,10 +21,10 @@ import AccessAlarmOutlinedIcon from '@mui/icons-material/AccessAlarmOutlined';
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { TimeFrame } from '@/anchor/constants';
-
+// #1c1b20
 const card_style = {
   borderRadius: '20px',
-  backgroundColor: '#1c1b20',
+  backgroundColor: '#1B001B',
   padding: '0px',
   color: 'white',
   transition: 'transform 0.3s ease',

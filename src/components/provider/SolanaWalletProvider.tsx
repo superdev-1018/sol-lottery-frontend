@@ -31,11 +31,11 @@ export default function SolanaWalletProvider({ children }: Props) {
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
-      new GlowWalletAdapter(),
       new SlopeWalletAdapter(),
+      new GlowWalletAdapter(),
       new SolflareWalletAdapter({ network }),
       new LedgerWalletAdapter(),
-      new TorusWalletAdapter(),
+      // new TorusWalletAdapter(),
       new ExodusWalletAdapter()
     ],
     [network]
@@ -56,7 +56,7 @@ export default function SolanaWalletProvider({ children }: Props) {
   return (
     <>
       <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets} onError={onError}>
+        <WalletProvider wallets={wallets} onError={onError} >
           <WalletModalProvider>
             <GlobalStateContext>
               {children}
