@@ -12,6 +12,7 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { useNavigate } from 'react-router'
 import logoImg from '@/assets/img/logo/logo1.png'
+import markImg from '@/assets/img/logo/mark.png'
 import { useRecoilValue } from 'recoil'
 import { colorModeState } from '@/store/colorMode'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
@@ -23,6 +24,7 @@ import {ReferralModal} from '@/components/main/referral_modal'
 import { useGlobalState } from '@/hooks/useGlobalState'
 import { toast } from 'react-toastify'
 import { SiteUrl } from '@/anchor/constants'
+import { alignProperty } from '@mui/material/styles/cssUtils'
 
 
 
@@ -64,9 +66,12 @@ export default function DefaultHeader() {
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={4} sx={{...style.header.titleContainer, paddingY:smDisplay?'20px':''}}>
-            <Typography variant="h1" align="center" sx={{...style.header.title}}>
+            {/* <Typography variant="h1" align="center" sx={{...style.header.title}}>
                 Pool Party
-            </Typography>
+            </Typography> */}
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <img src={markImg} alt="Logo" width={smDisplay?"180px":"150px"}/>
+            </div>
             <Typography variant="h3" align="center" sx={style.header.subtitle}>
               Choose your chances
             </Typography>
