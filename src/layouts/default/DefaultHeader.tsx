@@ -62,17 +62,17 @@ export default function DefaultHeader() {
         <Grid container>
           <Grid item xs={12} sm={12} md={4}>
             <Box display={'flex'}  sx={style.header.logo}>
-              <Link to="/"><img src={logoImg} alt="Logo"/></Link>
+              <Link to="/"><img src={markImg} alt="Logo"/></Link>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} sx={{...style.header.titleContainer, paddingY:smDisplay?'20px':''}}>
+          <Grid item xs={12} sm={12} md={4} sx={{...style.header.titleContainer, paddingY:smDisplay?'20px':'', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             {/* <Typography variant="h1" align="center" sx={{...style.header.title}}>
                 Pool Party
             </Typography> */}
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            {/* <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <img src={markImg} alt="Logo" width={smDisplay?"180px":"150px"}/>
-            </div>
-            <Typography variant="h3" align="center" sx={style.header.subtitle}>
+            </div> */}
+            <Typography variant="h1" align="center" sx={style.header.title}>
               Choose your chances
             </Typography>
           </Grid>
